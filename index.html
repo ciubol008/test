@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Test – Gospodarka wagonami</title>
+<style>
+body{
+font-family: Arial;
+max-width: 900px;
+margin: auto;
+padding: 20px;
+background:#f5f5f5;
+}
+.question{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:10px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+button{
+padding:15px;
+font-size:18px;
+background:#1976d2;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+#result{
+font-size:24px;
+margin-top:20px;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Test – Gospodarka wagonami towarowymi</h1>
+
+<form id="quiz"></form>
+
+<button onclick="checkTest()">Zakończ test</button>
+
+<div id="result"></div>
+
+<script>
+
+const questions = [
+{
+q:"1. Rzeczywista masa hamująca hamulca ręcznego wagonów towarowych kolei 1520 mm wynosi:",
+a:["14 ton","Jest równa masie tary wagonu","Jest podana na ścianie bocznej wagonu"],
+correct:0
+},
+{
+q:"2. W wagonach kolei 1435mm ... masa ogólna przypadająca na 1 oś jest:",
+a:["większa od 6 ton","równa lub większa niż 11 ton","większa od 10 ton"],
+correct:1
+},
+{
+q:"3. Jeżeli podczas uproszczonej próby hamulców ... należy:",
+a:["dokonać próby szczegółowej pociągu","dokonać ponownie próby uproszczonej pociągu","dokonać próby szczegółowej dwóch ostatnich wagonów"],
+correct:0
+},
+{
+q:"4. Po zmianie składu pociągu, jeżeli doczepione pojazdy stanowią więcej niż 50%:",
+a:["Próbę uproszczoną na doczepionych wagonach","Próbę szczegółową hamulca całego pociągu","Próbę uproszczoną całego pociągu"],
+correct:1
+},
+{
+q:"5. Po zmianie składu pociągu, jeżeli odczepione pojazdy stanowią więcej niż 50%:",
+a:["Próba nie jest wymagana","Próba szczegółowa","Próba uproszczona pociągu"],
+correct:2
+},
+{
+q:"6. Próbę szczegółową należy wykonać gdy:",
+a:["urządzenia nie były zasilane sprężonym powietrzem dłużej niż 24 godz.","postój trwał dłużej niż 12 godz.","nie były zasilane do 24 godz."],
+correct:0
+},
+{
+q:"7. Przy wyłączeniu zasilania powyżej 2 godz. do 24 godz.:",
+a:["próba uproszczona","próba szczegółowa","brak próby"],
+correct:0
+},
+{
+q:"8. Gdy masa hamująca jest mniejsza od wymaganej należy:",
+a:["wliczyć masę wszystkich pojazdów","zmniejszyć prędkość pociągu","jechać rozkładowo"],
+correct:1
+},
+{
+q:"9. Rzeczywista masa hamująca pociągu poniżej 200 ton:",
+a:["bez pojazdów trakcyjnych","z pojazdami trakcyjnymi","warunkowo"],
+correct:1
+},
+{
+q:"10. Przesyłka wyjątkowo ciężka:",
+a:[">98 ton",">70 ton",">60 ton"],
+correct:2
+},
+{
+q:"11. Masa hamująca wagonu chłodni 4 osiowego dwustronnie:",
+a:["33 t","36 t","49 t"],
+correct:2
+},
+{
+q:"12. Masa hamująca wagonu chłodni 4 osiowego jednostronnie:",
+a:["33 t","36 t","49 t"],
+correct:0
+},
+{
+q:"13. Wagon 3-6 t/oś jednostronne hamowanie:",
+a:["33 t","36 t","18 t"],
+correct:2
+},
+{
+q:"14. Wagon >6 t/oś jednostronne hamowanie:",
+a:["33 t","36 t","18 t"],
+correct:1
+},
+{
+q:"15. Odstępstwo od rozkładu jazdy:",
+a:["dyżurnego ruchu","dyspozytora","dyrektora"],
+correct:1
+},
+{
+q:"16. Pierwsza cyfra 2 oznacza wagon:",
+a:["węglarkę","platformę","kryty"],
+correct:2
+},
+{
+q:"17. Pierwsza cyfra 4:",
+a:["węglarkę","platformę","kryty"],
+correct:1
+},
+{
+q:"18. Pierwsza cyfra 6:",
+a:["węglarkę","platformę","kryty"],
+correct:0
+},
+{
+q:"19. Pierwsza cyfra 7:",
+a:["izotermiczny","platformę","cysternę"],
+correct:2
+},
+{
+q:"20. Pierwsza cyfra 8:",
+a:["węglarkę","platformę","izotermiczny"],
+correct:2
+},
+{
+q:"21. Pierwsza cyfra 5:",
+a:["węglarkę","platformę","wagon prywatny"],
+correct:2
+},
+{
+q:"22. Litera G oznacza:",
+a:["węglarkę","platformę","kryty"],
+correct:2
+},
+{
+q:"23. Litera R oznacza:",
+a:["węglarkę","platformę","kryty"],
+correct:1
+},
+{
+q:"24. Litera E oznacza:",
+a:["węglarkę","platformę","kryty"],
+correct:0
+},
+{
+q:"25. Litera Z oznacza:",
+a:["izotermiczny","platformę","cysternę"],
+correct:2
+},
+{
+q:"26. Litera I oznacza:",
+a:["węglarkę","platformę","izotermiczny"],
+correct:2
+},
+{
+q:"27. Maksymalna liczba wagonów bez hamulca:",
+a:["2 wagony","3 wagony","4 wagony"],
+correct:0
+},
+{
+q:"28. Długość pociągu jest:",
+a:["sumą długości wszystkich pojazdów z trakcyjnymi","bez trakcyjnych","tylko wagony"],
+correct:0
+},
+{
+q:"29. Minimalna odległość przy obchodzeniu:",
+a:["5 m","10 m","15 m"],
+correct:1
+},
+{
+q:"30. Czynny hamulec musi mieć:",
+a:["4 ostatnie wagony","pierwszy i ostatni pojazd","2 ostatnie wagony"],
+correct:1
+},
+{
+q:"31. Próba uproszczona polega na:",
+a:["powietrze + 2 ostatnie wagony","powietrze + pierwszy i ostatni pojazd","ostatni wagon"],
+correct:2
+},
+{
+q:"32. Wagon kryty po rozładunku:",
+a:["drzwi uchylone i zabezpieczone","drzwi otwarte","drzwi zamknięte i zadrutowane"],
+correct:0
+},
+{
+q:"33. Wagon po rozładunku:",
+a:["oczyszczony i sprawny","umyć","może być brudny"],
+correct:0
+},
+{
+q:"34. Protokół H-1428:",
+a:["min 1 egz.","min 2 egz.","min 3 egz."],
+correct:1
+},
+{
+q:"35. Dokument 3 egz. wagony wyłączone:",
+a:["Mw-579","Zał. 16 do PGW","Mw-601"],
+correct:1
+}
+];
+
+const quizDiv = document.getElementById("quiz");
+
+questions.forEach((q,i)=>{
+let html = `<div class="question"><b>${q.q}</b><br>`;
+q.a.forEach((ans,j)=>{
+html += `<label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${ans}</label><br>`;
+});
+html += "</div>";
+quizDiv.innerHTML += html;
+});
+
+function checkTest(){
+let score=0;
+questions.forEach((q,i)=>{
+let ans=document.querySelector(`input[name=q${i}]:checked`);
+if(ans && Number(ans.value)===q.correct) score++;
+});
+let percent=Math.round(score/questions.length*100);
+document.getElementById("result").innerHTML=
+`Wynik: ${score}/${questions.length} (${percent}%)`;
+}
+
+</script>
+
+</body>
+</html>
