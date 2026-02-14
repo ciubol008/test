@@ -227,10 +227,29 @@ correct:1
 
 const quizDiv = document.getElementById("quiz");
 
+const letters = ["A","B","C"];
+
+questions.forEach((q,i)=>{
+let div=document.createElement("div");
+div.className="question";
+
 questions.forEach((q,i)=>{
 let html = `<div class="question"><b>${q.q}</b><br>`;
 q.a.forEach((ans,j)=>{
-html += `<label><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${ans}</label><br>`;
+html += ;
+let answers="";
+
+q.a.forEach((ans,j)=>{
+answers+=`
+<label>
+<input type="radio" name="q${i}" value="${j}">
+<strong>${letters[j]})</strong> ${ans}
+</label>`;
+});
+
+div.innerHTML=`<p>${q.q}</p>${answers}`;
+quiz.appendChild(div);
+});
 });
 html += "</div>";
 quizDiv.innerHTML += html;
